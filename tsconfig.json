@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "strict": true,
+        "jsx": "react-jsx",
+        "moduleResolution": "Node" /* node_modules */,
+        "module": "ESNext" /* import.meta */,
+        "types": ["vite/client"] /* import.meta.env */,
+        "resolveJsonModule": true,
+        "noEmit": true,
+        "outDir": "./lib",
+        "declaration": true
+    },
+    "include": ["./src"]
+}

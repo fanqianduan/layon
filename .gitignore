@@ -1,0 +1,6 @@
+# 目录
+lib/
+node_modules/
+
+# 文件
+yarn-error.log
