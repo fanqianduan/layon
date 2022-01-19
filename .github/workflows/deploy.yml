@@ -33,6 +33,7 @@ jobs:
             - name: 部署项目
               run: |
                   cd dist
+                  touch .nojekyll
                   git init
                   git config user.name $GITHUB_ACTOR
                   git config user.email $GITHUB_ACTOR@github.com
@@ -42,4 +43,4 @@ jobs:
               env:
                   GITHUB_ACTOR: ${{ github.actor }}
                   GITHUB_TOKEN: ${{ github.token }}
-                  GITHUB_REPO: fanqianduan/layon
+                  GITHUB_REPO: ${{ github.repository }}
