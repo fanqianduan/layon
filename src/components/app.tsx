@@ -43,27 +43,15 @@ export const Content: FC = () => {
 
     const page = useSelector(({ pages }) => pages[pageId]);
 
-    const onClick = () => {
-        if (!page) return;
-
-        const nodeId = randomUUID();
-
-        mutation.commit([
-            ({ nodes }) => {
-                nodes[nodeId] = {
-                    id: nodeId,
-                    children: [],
-                };
-            },
-            ({ pages }) => {
-                pages[pageId].children.push(nodeId);
-            },
-        ]);
-    };
-
     return (
         <div className="p-6">
             <div>
+                <button className="border px-1 mr-2" onClick={mutation.undo}>
+                    撤销
+                </button>
+                <button className="border px-1 mr-2" onClick={mutation.redo}>
+                    重做
+                </button>
                 <Page.Create />
                 <Page.Switcher />
             </div>
@@ -73,7 +61,7 @@ export const Content: FC = () => {
                     return <Page.Node key={nodeId} nodeId={nodeId} />;
                 })}
             </Page.Container>
-            <button onClick={onClick}>添加组件</button>
+            <Page.AddComponent pageId={pageId} />
         </div>
     );
 };

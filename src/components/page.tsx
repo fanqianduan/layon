@@ -4,8 +4,9 @@
 
 import { ChangeEventHandler, FC } from "react";
 import { useSelector } from "react-redux";
-import { mutation, UUID } from "../redux";
+import { mutation, Page, UUID } from "../redux";
 import { randomUUID } from "../utils";
+import * as Renderer from "./renderer";
 
 /**
  * 容器
@@ -13,7 +14,11 @@ import { randomUUID } from "../utils";
 export const Container: FC = (props) => {
     const { children } = props;
 
-    return <div className="w-[375px] h-[812px] mt-2 border">{children}</div>;
+    return (
+        <div className="w-[375px] h-[812px] mt-2 border overflow-y-auto">
+            {children}
+        </div>
+    );
 };
 
 /**
@@ -53,14 +58,14 @@ export const Create: FC = () => {
         const pageId = randomUUID();
 
         mutation.commit([
-            ({ session }) => {
-                session.pageId = pageId;
-            },
             ({ pages }) => {
                 pages[pageId] = {
                     id: pageId,
                     children: [],
                 };
+            },
+            ({ session }) => {
+                session.pageId = pageId;
             },
         ]);
     };
@@ -78,5 +83,57 @@ export const Create: FC = () => {
 export const Node: FC<{ nodeId: UUID }> = (props) => {
     const { nodeId } = props;
 
-    return <>{nodeId}</>;
+    const node = useSelector(({ nodes }) => nodes[nodeId]);
+
+    const { schema, value } = node.properties;
+
+    const NodeRenderer = Reflect.get(Renderer, schema);
+
+    if (NodeRenderer) {
+        return (
+            <NodeRenderer nodeId={nodeId} {...value}>
+                {node.children.map((nodeId) => {
+                    return <Node key={nodeId} nodeId={nodeId} />;
+                })}
+            </NodeRenderer>
+        );
+    }
+
+    return <>not support</>;
+};
+
+/**
+ * 添加组件
+ */
+export const AddComponent: FC<{ pageId: Page["id"] }> = (props) => {
+    const { pageId } = props;
+
+    const onClick = () => {
+        if (!pageId) {
+            alert("请先添加页面");
+            return;
+        }
+
+        const nodeId = randomUUID();
+
+        mutation.commit([
+            ({ nodes }) => {
+                nodes[nodeId] = {
+                    id: nodeId,
+                    children: [],
+                    properties: {
+                        schema: "Button",
+                        value: {
+                            text: "hello",
+                        },
+                    },
+                };
+            },
+            ({ pages }) => {
+                pages[pageId].children.push(nodeId);
+            },
+        ]);
+    };
+
+    return <button onClick={onClick}>添加组件</button>;
 };

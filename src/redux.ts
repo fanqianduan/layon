@@ -18,6 +18,10 @@ export type UUID = string;
 export type Node = {
     id: UUID;
     children: Array<Node["id"]>;
+    properties: {
+        schema: string;
+        value: object;
+    };
 };
 
 export type Page = {
