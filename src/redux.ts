@@ -20,7 +20,9 @@ export type Node = {
     children: Array<Node["id"]>;
     properties: {
         schema: string;
-        value: object;
+        value: {
+            [key: string]: any;
+        };
     };
 };
 
@@ -31,6 +33,7 @@ export type Page = {
 
 export type Session = {
     pageId?: Page["id"];
+    nodeId?: Node["id"];
 };
 
 type Store = {

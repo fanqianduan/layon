@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import { mutation, Page, UUID } from "../redux";
 import { randomUUID } from "../utils";
 import * as Renderer from "./renderer";
+import * as Property from "./property";
+import * as Schema from "../schema.json";
 
 /**
  * 容器
@@ -89,13 +91,23 @@ export const Node: FC<{ nodeId: UUID }> = (props) => {
 
     const NodeRenderer = Reflect.get(Renderer, schema);
 
+    const onClick = () => {
+        mutation.commit([
+            ({ session }) => {
+                session.nodeId = nodeId;
+            },
+        ]);
+    };
+
     if (NodeRenderer) {
         return (
-            <NodeRenderer nodeId={nodeId} {...value}>
-                {node.children.map((nodeId) => {
-                    return <Node key={nodeId} nodeId={nodeId} />;
-                })}
-            </NodeRenderer>
+            <div onClick={onClick}>
+                <NodeRenderer nodeId={nodeId} {...value}>
+                    {node.children.map((nodeId) => {
+                        return <Node key={nodeId} nodeId={nodeId} />;
+                    })}
+                </NodeRenderer>
+            </div>
         );
     }
 
@@ -123,9 +135,7 @@ export const AddComponent: FC<{ pageId: Page["id"] }> = (props) => {
                     children: [],
                     properties: {
                         schema: "Button",
-                        value: {
-                            text: "hello",
-                        },
+                        value: {},
                     },
                 };
             },
@@ -135,5 +145,46 @@ export const AddComponent: FC<{ pageId: Page["id"] }> = (props) => {
         ]);
     };
 
-    return <button onClick={onClick}>添加组件</button>;
+    return (
+        <button className="border px-1 ml-2" onClick={onClick}>
+            + 组件
+        </button>
+    );
+};
+
+/**
+ * 配置面板
+ */
+export const Panel: FC = () => {
+    const nodeId = useSelector(({ session }) => session.nodeId);
+
+    const node = useSelector(({ nodes }) => nodeId && nodes[nodeId]);
+
+    if (node) {
+        const { schema } = node.properties;
+
+        const Component = Schema[schema as keyof typeof Schema];
+
+        return (
+            <>
+                <div>{node.id.slice(-10)}</div>
+                {Component.properties.map((property) => {
+                    const { key, type } = property;
+
+                    if (type === "string") {
+                        return (
+                            <Property.String
+                                key={node.id + key}
+                                target={[node.id, key]}
+                            />
+                        );
+                    }
+
+                    return <>not support</>;
+                })}
+            </>
+        );
+    }
+
+    return <>no target</>;
 };

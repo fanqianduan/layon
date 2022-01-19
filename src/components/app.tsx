@@ -44,7 +44,7 @@ export const Content: FC = () => {
     const page = useSelector(({ pages }) => pages[pageId]);
 
     return (
-        <div className="p-6">
+        <div className="p-6 relative">
             <div>
                 <button className="border px-1 mr-2" onClick={mutation.undo}>
                     撤销
@@ -54,6 +54,7 @@ export const Content: FC = () => {
                 </button>
                 <Page.Create />
                 <Page.Switcher />
+                <Page.AddComponent pageId={pageId} />
             </div>
             <Page.Container>
                 {pageId}
@@ -61,7 +62,9 @@ export const Content: FC = () => {
                     return <Page.Node key={nodeId} nodeId={nodeId} />;
                 })}
             </Page.Container>
-            <Page.AddComponent pageId={pageId} />
+            <div className="absolute right-0 inset-y-0 w-80 bg-zinc-50">
+                <Page.Panel />
+            </div>
         </div>
     );
 };

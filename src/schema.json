@@ -1,0 +1,12 @@
+{
+    "Button": {
+        "properties": [
+            {
+                "key": "text",
+                "type": "string",
+                "title": "文字",
+                "placeholder": "请输入文字"
+            }
+        ]
+    }
+}
