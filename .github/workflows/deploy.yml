@@ -16,6 +16,8 @@ jobs:
         steps:
             - name: 拉取代码
               uses: actions/checkout@v2
+              with:
+                  fetch-depth: 1
 
             - name: 搭建环境
               uses: actions/setup-node@v2
@@ -26,12 +28,18 @@ jobs:
               run: yarn --frozen-lockfile
 
             - name: 编译项目
-              run: yarn vite build
+              run: yarn vite build --base /layon/
 
             - name: 部署项目
               run: |
                   cd dist
                   git init
+                  git config user.name $GITHUB_ACTOR
+                  git config user.email $GITHUB_ACTOR@github.com
                   git add .
                   git commit -m 'update'
-                  git push git@github.com:fanqianduan/layon.git HEAD:gh-pages -f
+                  git push https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPO.git HEAD:gh-pages -f
+              env:
+                  GITHUB_ACTOR: ${{ github.actor }}
+                  GITHUB_TOKEN: ${{ github.token }}
+                  GITHUB_REPO: fanqianduan/layon
