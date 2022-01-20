@@ -103,13 +103,13 @@ export const Node: FC<{ nodeId: UUID }> = (props) => {
 
     if (NodeRenderer) {
         return (
-            <div onClickCapture={onClick}>
+            <span onClickCapture={onClick}>
                 <NodeRenderer {...value}>
                     {node.children.map((nodeId) => {
                         return <Node key={nodeId} nodeId={nodeId} />;
                     })}
                 </NodeRenderer>
-            </div>
+            </span>
         );
     }
 

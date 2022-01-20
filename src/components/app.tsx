@@ -64,7 +64,7 @@ export const Content: FC = () => {
                     <Page.AddComponent pageId={pageId} />
                 </div>
                 <Page.Container>
-                    {pageId}
+                    <div>{pageId}</div>
                     {page?.children.map((nodeId) => {
                         return <Page.Node key={nodeId} nodeId={nodeId} />;
                     })}
