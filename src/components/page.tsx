@@ -2,13 +2,13 @@
  * 页面
  */
 
-import { ChangeEventHandler, FC } from "react";
+import { ChangeEventHandler, FC, MouseEventHandler } from "react";
 import { useSelector } from "react-redux";
 import { mutation, Page, UUID } from "../redux";
-import { randomUUID } from "../utils";
-import * as Renderer from "./renderer";
-import * as Property from "./property";
 import * as Schema from "../schema.json";
+import { randomUUID } from "../utils";
+import * as Property from "./property";
+import * as Renderer from "./renderer";
 
 /**
  * 容器
@@ -91,7 +91,9 @@ export const Node: FC<{ nodeId: UUID }> = (props) => {
 
     const NodeRenderer = Reflect.get(Renderer, schema);
 
-    const onClick = () => {
+    const onClick: MouseEventHandler = (event) => {
+        event.stopPropagation();
+
         mutation.commit([
             ({ session }) => {
                 session.nodeId = nodeId;
@@ -101,8 +103,8 @@ export const Node: FC<{ nodeId: UUID }> = (props) => {
 
     if (NodeRenderer) {
         return (
-            <div onClick={onClick}>
-                <NodeRenderer nodeId={nodeId} {...value}>
+            <div onClickCapture={onClick}>
+                <NodeRenderer {...value}>
                     {node.children.map((nodeId) => {
                         return <Node key={nodeId} nodeId={nodeId} />;
                     })}

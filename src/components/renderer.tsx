@@ -3,14 +3,11 @@
  */
 
 import { FC } from "react";
-import { UUID } from "../redux";
 
 /**
  * 按钮
  */
 export const Button: FC<{
-    nodeId: UUID;
-
     /**
      * 文字
      *
@@ -18,10 +15,14 @@ export const Button: FC<{
      */
     text: string;
 }> = (props) => {
-    const { nodeId, text } = props;
+    const { text } = props;
+
+    const onClick = () => {
+        alert(text ?? "按钮");
+    };
 
     return (
-        <button className="px-4 py-2 border" title={nodeId}>
+        <button className="px-4 py-2 border" onClick={onClick}>
             {text ?? "按钮"}
         </button>
     );
