@@ -44,7 +44,7 @@ export const Content: FC = () => {
     const page = useSelector(({ pages }) => pages[pageId]);
 
     return (
-        <div className="p-6 relative">
+        <div className="p-6 relative h-full">
             <div>
                 <button className="border px-1 mr-2" onClick={mutation.undo}>
                     撤销

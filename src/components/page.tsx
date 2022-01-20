@@ -44,7 +44,7 @@ export const Switcher: FC = () => {
             {pages.map((pageId) => {
                 return (
                     <option key={pageId} value={pageId}>
-                        {pageId.slice(-10)}
+                        {pageId.slice(-12)}
                     </option>
                 );
             })}
@@ -167,7 +167,7 @@ export const Panel: FC = () => {
 
         return (
             <>
-                <div>{node.id.slice(-10)}</div>
+                <div>{node.id.slice(-12)}</div>
                 {Component.properties.map((property) => {
                     const { key, type } = property;
 
