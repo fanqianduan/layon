@@ -30,7 +30,7 @@ export const mountApp = (target: "root" | ({} & string) | Container) => {
  * 同步预览
  */
 export const syncPreview = () => {
-    delete localStorage.preview;
+    delete sessionStorage.preview;
 
     subscribe(() => {
         const { nodes, pages, session } = getState();
@@ -74,14 +74,14 @@ export const syncPreview = () => {
                 iframe.hidden = true;
                 document.body.appendChild(iframe);
 
-                const { localStorage } = iframe.contentWindow!;
-                localStorage.preview = JSON.stringify(getSchema(page));
+                const { sessionStorage } = iframe.contentWindow!;
+                sessionStorage.preview = JSON.stringify(getSchema(page));
                 document.body.removeChild(iframe);
 
                 return;
             }
         }
 
-        delete localStorage.preview;
+        delete sessionStorage.preview;
     });
 };
