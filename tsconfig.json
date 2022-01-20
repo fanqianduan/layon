@@ -7,6 +7,7 @@
         "module": "ESNext" /* import.meta */,
         "types": ["vite/client"] /* import.meta.env */,
         "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
         "noEmit": true,
         "outDir": "./lib",
         "declaration": true

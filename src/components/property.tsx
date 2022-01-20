@@ -5,7 +5,7 @@
 import { ChangeEventHandler, FC } from "react";
 import { useSelector } from "react-redux";
 import { mutation, UUID } from "../redux";
-import * as Schema from "../schema.json";
+import Schema from "../schema.json";
 
 /**
  * 字符串类型
@@ -22,7 +22,10 @@ export const String: FC<{ target: [UUID, string] }> = (props) => {
     const property = Component.properties.find((p) => p.key === key);
 
     if (property) {
-        const { title, placeholder } = property;
+        const { title } = property;
+
+        const placeholder =
+            Reflect.get(property, "placeholder") ?? `请填写${title}`;
 
         const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
             mutation.commit([
@@ -45,4 +48,11 @@ export const String: FC<{ target: [UUID, string] }> = (props) => {
     }
 
     return <>no property</>;
+};
+
+/**
+ * 数组类型
+ */
+export const Array: FC = () => {
+    return <>array</>;
 };

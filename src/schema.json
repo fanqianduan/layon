@@ -1,11 +1,33 @@
 {
     "Button": {
+        "title": "按钮",
         "properties": [
             {
                 "key": "text",
-                "type": "string",
-                "title": "文字",
-                "placeholder": "请输入文字"
+                "type": "String",
+                "title": "文字"
+            }
+        ]
+    },
+    "Swiper": {
+        "title": "轮播图",
+        "properties": [
+            {
+                "key": "items",
+                "type": "Array",
+                "properties": [
+                    {
+                        "key": "cover",
+                        "type": "String",
+                        "title": "封面"
+                    },
+                    {
+                        "key": "href",
+                        "type": "String",
+                        "title": "链接"
+                    }
+                ],
+                "title": "轮播项"
             }
         ]
     }

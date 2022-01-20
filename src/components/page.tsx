@@ -5,7 +5,7 @@
 import { ChangeEventHandler, FC, MouseEventHandler } from "react";
 import { useSelector } from "react-redux";
 import { mutation, Page, UUID } from "../redux";
-import * as Schema from "../schema.json";
+import Schema from "../schema.json";
 import { randomUUID } from "../utils";
 import * as Property from "./property";
 import * as Renderer from "./renderer";
@@ -128,23 +128,38 @@ export const AddComponent: FC<{ pageId: Page["id"] }> = (props) => {
             return;
         }
 
-        const nodeId = randomUUID();
+        const addComponent = (properties: any) => {
+            const nodeId = randomUUID();
 
-        mutation.commit([
-            ({ nodes }) => {
-                nodes[nodeId] = {
-                    id: nodeId,
-                    children: [],
-                    properties: {
-                        schema: "Button",
-                        value: {},
-                    },
-                };
+            mutation.commit([
+                ({ nodes }) => {
+                    nodes[nodeId] = {
+                        id: nodeId,
+                        children: [],
+                        properties,
+                    };
+                },
+                ({ pages }) => {
+                    pages[pageId].children.push(nodeId);
+                },
+            ]);
+        };
+
+        addComponent({
+            schema: "Button",
+            value: {},
+        });
+
+        addComponent({
+            schema: "Swiper",
+            value: {
+                items: [
+                    { cover: "", href: "" },
+                    { cover: "", href: "" },
+                    { cover: "", href: "" },
+                ],
             },
-            ({ pages }) => {
-                pages[pageId].children.push(nodeId);
-            },
-        ]);
+        });
     };
 
     return (
@@ -173,9 +188,11 @@ export const Panel: FC = () => {
                 {Component.properties.map((property) => {
                     const { key, type } = property;
 
-                    if (type === "string") {
+                    const PropertyRenderer = Reflect.get(Property, type);
+
+                    if (PropertyRenderer) {
                         return (
-                            <Property.String
+                            <PropertyRenderer
                                 key={node.id + key}
                                 target={[node.id, key]}
                             />

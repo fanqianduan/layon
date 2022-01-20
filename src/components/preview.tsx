@@ -5,6 +5,9 @@
 import { FC, useEffect, useState } from "react";
 import * as Renderer from "./renderer";
 
+/**
+ * 预览容器
+ */
 export const Container: FC = () => {
     type Schema = {
         properties: Record<string, Schema>;
