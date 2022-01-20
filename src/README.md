@@ -24,3 +24,8 @@
 <summary>redux.ts</summary>
 数据仓库
 </details>
+
+<details>
+<summary>schema.json</summary>
+组件元信息
+</details>
