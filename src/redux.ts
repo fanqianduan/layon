@@ -17,10 +17,10 @@ export type UUID = string;
 
 export type Node = {
     id: UUID;
-    children: Array<Node["id"]>;
-    properties: {
-        schema: string;
-        value: {
+    content: Array<Node["id"]>;
+    element: {
+        type: string;
+        props: {
             [key: string]: any;
         };
     };
@@ -28,7 +28,7 @@ export type Node = {
 
 export type Page = {
     id: UUID;
-    children: Array<Node["id"]>;
+    content: Array<Node["id"]>;
 };
 
 export type Session = {

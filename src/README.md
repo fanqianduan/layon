@@ -6,6 +6,11 @@
 </details>
 
 <details>
+<summary>pages</summary>
+页面内容
+</details>
+
+<details>
 <summary>utils</summary>
 辅助函数
 </details>
@@ -26,6 +31,6 @@
 </details>
 
 <details>
-<summary>schema.json</summary>
-组件元信息
+<summary>renderer.tsx</summary>
+渲染器
 </details>
