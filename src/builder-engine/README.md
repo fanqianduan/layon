@@ -29,8 +29,3 @@
 <summary>redux.ts</summary>
 数据仓库
 </details>
-
-<details>
-<summary>renderer.tsx</summary>
-渲染器
-</details>

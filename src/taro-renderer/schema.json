@@ -1,0 +1,12 @@
+{
+    "Button": {
+        "title": "按钮",
+        "type": "object",
+        "properties": {
+            "text": {
+                "title": "按钮文字",
+                "type": "string"
+            }
+        }
+    }
+}

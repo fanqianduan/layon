@@ -11,8 +11,9 @@ import {
     ReactNode,
 } from "react";
 import { useSelector } from "react-redux";
-import { getState, Node, Page, mutation } from "../redux";
-import * as Renderer from "../renderer";
+import * as Renderer from "../../taro-renderer/renderer";
+import * as RendererSchema from "../../taro-renderer/schema.json";
+import { getState, mutation, Node } from "../redux";
 import { randomUUID } from "../utils";
 
 export const Builder: FC = () => {
@@ -20,7 +21,7 @@ export const Builder: FC = () => {
     let slotComponentLibrary: ReactNode;
     {
         /** 渲染器列表 */
-        const slotRendererList = Object.entries(Renderer).map(
+        const slotRendererList = Object.entries(RendererSchema).map(
             ([key, value]) => {
                 /** 添加节点 */
                 const handleAppend = () => {
@@ -53,7 +54,7 @@ export const Builder: FC = () => {
                 };
 
                 /** 渲染器标题 */
-                const { title } = value.typeSchema;
+                const { title } = value;
 
                 return (
                     <div key={key} onClick={handleAppend}>
@@ -233,9 +234,8 @@ export const Builder: FC = () => {
 
                 const value = get(node, valuePath);
 
-                const schema = get(Renderer, [
+                const schema = get(RendererSchema, [
                     node.element.type,
-                    "typeSchema",
                     ...schemaPath,
                 ]);
 
