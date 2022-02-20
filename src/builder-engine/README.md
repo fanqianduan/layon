@@ -21,11 +21,6 @@
 </details>
 
 <details>
-<summary>index.ts</summary>
-类库导出
-</details>
-
-<details>
 <summary>redux.ts</summary>
 数据仓库
 </details>
