@@ -9,7 +9,7 @@ import { FC } from "react";
  */
 export const Button: FC<{
     /**
-     * 文字
+     * 按钮文字
      */
     text: string;
 }> = (props) => {
